@@ -19,4 +19,16 @@ public class FileWordAnalyzer {
         splittedText.sort(String::compareToIgnoreCase);
         return splittedText;
     }
+
+    public List<String> getWordsContainingSubstring(String subString) throws IOException {
+        List<String> wordsContainingSubstring = new ArrayList<>();
+        String originalText = filePartReader.readLines().replaceAll("[.]*[,]*\\n*", "");
+        String[] splittedText = originalText.split("\\W");
+        for (String word: splittedText) {
+            if (word.contains(subString)) {
+                wordsContainingSubstring.add(word);
+            }
+        }
+        return wordsContainingSubstring;
+    }
 }
