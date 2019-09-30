@@ -13,17 +13,21 @@ public class FileWordAnalyzer {
         this.filePartReader = filePartReader;
     }
 
-    public List<String> getWordsOrderedAlphabetically() throws IOException {
+    private List<String> split() throws IOException {
         String originalText = filePartReader.readLines().replaceAll("[.]*[,]*\\n*", "");
-        List<String> splittedText = Arrays.asList(originalText.split("\\W"));
+        return Arrays.asList(originalText.split("\\W"));
+    }
+
+    public List<String> getWordsOrderedAlphabetically() throws IOException {
+        List<String> splittedText = split();
         splittedText.sort(String::compareToIgnoreCase);
         return splittedText;
     }
 
     public List<String> getWordsContainingSubstring(String subString) throws IOException {
         List<String> wordsContainingSubstring = new ArrayList<>();
-        String originalText = filePartReader.readLines().replaceAll("[.]*[,]*\\n*", "");
-        String[] splittedText = originalText.split("\\W");
+        List<String> splittedText = split();
+
         for (String word : splittedText) {
             if (word.contains(subString)) {
                 wordsContainingSubstring.add(word);
@@ -34,8 +38,7 @@ public class FileWordAnalyzer {
 
     public List<String> getStringsWhichPalindromes() throws IOException {
         List<String> palindromes = new ArrayList<>();
-        String originalText = filePartReader.readLines().replaceAll("[.]*[,]*\\n*", "");
-        String[] splittedText = originalText.split("\\W");
+        List<String> splittedText = split();
 
         for (String word : splittedText) {
             if (word.length() > 1 && word.equals(reverse(word))) {
