@@ -3,6 +3,7 @@ package main.java.com.codecool.filePartReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 public class FilePartReader {
     private String filePath;
@@ -25,5 +26,13 @@ public class FilePartReader {
 
     public String read() throws IOException {
         return new String(Files.readAllBytes(Paths.get(filePath)));
+    }
+
+    public String readLines() throws IOException {
+        String originalText = read();
+        String[] splittedText = originalText.split(System.lineSeparator());
+        String[] selectedLines = Arrays.copyOfRange(splittedText, fromLine - 1, toLine);
+        return String.join(" ", selectedLines);
+
     }
 }
