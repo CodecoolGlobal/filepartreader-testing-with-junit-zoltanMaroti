@@ -24,11 +24,31 @@ public class FileWordAnalyzer {
         List<String> wordsContainingSubstring = new ArrayList<>();
         String originalText = filePartReader.readLines().replaceAll("[.]*[,]*\\n*", "");
         String[] splittedText = originalText.split("\\W");
-        for (String word: splittedText) {
+        for (String word : splittedText) {
             if (word.contains(subString)) {
                 wordsContainingSubstring.add(word);
             }
         }
         return wordsContainingSubstring;
+    }
+
+    public List<String> getStringsWhichPalindromes() throws IOException {
+        List<String> palindromes = new ArrayList<>();
+        String originalText = filePartReader.readLines().replaceAll("[.]*[,]*\\n*", "");
+        String[] splittedText = originalText.split("\\W");
+
+        for (String word : splittedText) {
+            if (word.length() > 1 && word.equals(reverse(word))) {
+                palindromes.add(word);
+            }
+        }
+        return palindromes;
+    }
+
+    private String reverse(String word) {
+        StringBuilder input = new StringBuilder();
+        input.append(word);
+        input = input.reverse();
+        return input.toString();
     }
 }
