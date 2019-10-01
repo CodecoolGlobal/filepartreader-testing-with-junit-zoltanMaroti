@@ -2,11 +2,32 @@ package main.java.com.codecool.filePartReader;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FilePartReaderTest {
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenToLineIsSmallerThenFromLine() {
+        FilePartReader filePartReader = new FilePartReader();
+        assertThrows(IllegalArgumentException.class, () -> filePartReader.setup("/Users/Home/Codecool/OOP/5th-SI-week/filepartreader-testing-with-junit-zoltanMaroti/src/main/resources/text.txt", 5, 1));
+    }
+
+    @Test
+    public void shouldThrowIllegalArgumentExceptionWhenFromLineIsSmallerThen1() {
+        FilePartReader filePartReader = new FilePartReader();
+        assertThrows(IllegalArgumentException.class, () -> filePartReader.setup("/Users/Home/Codecool/OOP/5th-SI-week/filepartreader-testing-with-junit-zoltanMaroti/src/main/resources/text.txt", - 1, 1));
+    }
+
+    @Test
+    public void shouldThrowIOException() {
+        FilePartReader filePartReader = new FilePartReader();
+        filePartReader.setup("resources/nope.txt", 1, 2);
+        assertThrows(IOException.class, () -> filePartReader.read());
+    }
+
 
     @Test
     public void testReader() throws IOException {
@@ -24,5 +45,14 @@ class FilePartReaderTest {
                 "Praesent porttitor urna et elit egestas, at rutrum nisl vehicula.\n" +
                 "Proin gravida interdum rhoncus. Pellentesque efficitur neque ut viverra volutpat.\n", filePartReader.read());
     }
+
+    @Test
+    public void testReadLines() throws IOException {
+        FilePartReader filePartReader = new FilePartReader();
+        filePartReader.setup("/Users/Home/Codecool/OOP/5th-SI-week/filepartreader-testing-with-junit-zoltanMaroti/src/main/resources/text.txt", 2, 2);
+
+        assertEquals("Integer tempor pulvinar nunc, et malesuada quam convallis blandit.", filePartReader.readLines());
+    }
+
 
 }
