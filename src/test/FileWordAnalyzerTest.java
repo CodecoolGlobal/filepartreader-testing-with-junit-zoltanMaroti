@@ -1,5 +1,6 @@
 import main.java.com.codecool.filePartReader.FilePartReader;
 import main.java.com.codecool.filePartReader.FileWordAnalyzer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -9,13 +10,20 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileWordAnalyzerTest {
-    @Test
-    public void testGetWordsOrderedAlphabetically() throws IOException {
+
+    FileWordAnalyzer fileWordAnalyzer = null;
+
+    @BeforeEach
+    public void setUp() {
         FilePartReader filePartReader = new FilePartReader();
         filePartReader.setup("/Users/Home/Codecool/OOP/5th-SI-week/filepartreader-testing-with-junit-zoltanMaroti/src/main/resources/text.txt", 3, 5);
-        FileWordAnalyzer fileWordAnalyzer = new FileWordAnalyzer(filePartReader);
+        fileWordAnalyzer = new FileWordAnalyzer(filePartReader);
+    }
+
+    @Test
+    public void testGetWordsOrderedAlphabetically() throws IOException {
         List<String> expected = Arrays.asList("ac", "aliquam", "amet", "arcu", "blandit", "dolor", "Donec", "egestas",
-                "eleifend", "erat", "eu", "In", "justo", "laoreet", "mauris", "nec", "nulla", "pellentesque",
+                "eleifend", "erat", "eu", "In", "justo", "laoreet", "mauris", "nec", "non", "nulla", "pellentesque",
                 "porttitor", "Proin", "sed", "sit", "tincidunt", "urna", "Ut");
 
         assertEquals(expected, fileWordAnalyzer.getWordsOrderedAlphabetically());
@@ -23,9 +31,6 @@ class FileWordAnalyzerTest {
 
     @Test
     public void testGetWordsContainingSubStrings() throws IOException {
-        FilePartReader filePartReader = new FilePartReader();
-        filePartReader.setup("/Users/Home/Codecool/OOP/5th-SI-week/filepartreader-testing-with-junit-zoltanMaroti/src/main/resources/text.txt", 3, 5);
-        FileWordAnalyzer fileWordAnalyzer = new FileWordAnalyzer(filePartReader);
         List<String> expected = Arrays.asList("pellentesque", "egestas");
 
         assertEquals(expected, fileWordAnalyzer.getWordsContainingSubstring("es"));
@@ -33,9 +38,6 @@ class FileWordAnalyzerTest {
 
     @Test
     public void testGetStringsWhichPalindromes() throws IOException {
-        FilePartReader filePartReader = new FilePartReader();
-        filePartReader.setup("/Users/Home/Codecool/OOP/5th-SI-week/filepartreader-testing-with-junit-zoltanMaroti/src/main/resources/text.txt", 1, 10);
-        FileWordAnalyzer fileWordAnalyzer = new FileWordAnalyzer(filePartReader);
         List<String> expected = Arrays.asList("non");
 
         assertEquals(expected, fileWordAnalyzer.getStringsWhichPalindromes());
